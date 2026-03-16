@@ -2,13 +2,13 @@
   <img src="assets/banner.svg" alt="LobsterSearch MCP Server" width="100%"/>
 </p>
 
-<h3 align="center">Find the best local businesses through AI — 7 MCP tools, 100+ verified businesses</h3>
+<h3 align="center">Find the best local businesses through AI — 7 MCP tools, 800+ verified businesses</h3>
 
 <p align="center">
   <a href="https://smithery.ai/server/lobstersearch"><img src="https://smithery.ai/badge/lobstersearch" alt="Smithery" /></a>
   <img src="https://img.shields.io/badge/MCP_SDK-1.27.1-blue?style=flat-square" alt="MCP SDK" />
   <img src="https://img.shields.io/badge/Tools-7-green?style=flat-square" alt="Tools" />
-  <img src="https://img.shields.io/badge/Businesses-100+-orange?style=flat-square" alt="Businesses" />
+  <img src="https://img.shields.io/badge/Businesses-800+-orange?style=flat-square" alt="Businesses" />
   <img src="https://img.shields.io/badge/Transport-StreamableHTTP-purple?style=flat-square" alt="Transport" />
   <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="License" />
 </p>
@@ -17,8 +17,68 @@
   <b>No API key required. No setup. Connect and search.</b>
 </p>
 
+---
+
+## Quick Start
+
+### Claude (Web & Desktop)
+
+1. Go to **Settings → Connectors** (or visit [claude.ai/settings/connectors](https://claude.ai/settings/connectors))
+2. Click **"Add custom connector"**
+3. Paste: `https://mcp.lobstersearch.ai/mcp`
+4. Click **Add**
+
+> Available on Pro, Max, Team, and Enterprise plans.
+
+### Claude Code
+
 ```bash
 claude mcp add lobstersearch --transport streamable-http https://mcp.lobstersearch.ai/mcp
+```
+
+### ChatGPT
+
+1. Enable **Developer Mode** in Settings → Advanced
+2. Go to **Settings → Connectors**
+3. Click **"Create"**, name it `LobsterSearch`
+4. Set the MCP server URL to: `https://mcp.lobstersearch.ai/mcp`
+5. Save
+
+> Requires ChatGPT Plus or Pro. Works in Chat and Deep Research modes.
+
+### Gemini CLI
+
+Add to your `~/.gemini/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "lobstersearch": {
+      "httpUrl": "https://mcp.lobstersearch.ai/mcp"
+    }
+  }
+}
+```
+
+### OpenClaw
+
+```bash
+clawhub install lobstersearch
+```
+
+### Cursor / Windsurf / Any MCP Client
+
+Add to your MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "lobstersearch": {
+      "url": "https://mcp.lobstersearch.ai/mcp",
+      "transport": "streamable-http"
+    }
+  }
+}
 ```
 
 ---
@@ -27,51 +87,9 @@ claude mcp add lobstersearch --transport streamable-http https://mcp.lobstersear
 
 LobsterSearch is a GEO-optimized business directory purpose-built for AI agents. Unlike generic search results, every business includes structured services with pricing, operating hours, promotions, and confidence scores — giving AI agents the data they need to make reliable recommendations.
 
+**800+ verified businesses** across **46 categories** in Singapore, UK, US, Australia, and Malaysia.
+
 It's a hosted service. No setup, no API key, no self-hosting. Connect your MCP client and start searching.
-
----
-
-## Quick Start
-
-### Claude Code (recommended)
-
-```bash
-claude mcp add lobstersearch --transport streamable-http https://mcp.lobstersearch.ai/mcp
-```
-
-### Claude Desktop
-
-Add to your `claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "lobstersearch": {
-      "url": "https://mcp.lobstersearch.ai/mcp",
-      "transport": "streamable-http"
-    }
-  }
-}
-```
-
-### Cursor
-
-Add to Cursor's MCP settings (`Settings > MCP`):
-
-```json
-{
-  "mcpServers": {
-    "lobstersearch": {
-      "url": "https://mcp.lobstersearch.ai/mcp",
-      "transport": "streamable-http"
-    }
-  }
-}
-```
-
-### Any MCP Client
-
-Connect to `https://mcp.lobstersearch.ai/mcp` using **StreamableHTTP** transport. No authentication required.
 
 ---
 
@@ -141,13 +159,6 @@ Find businesses near GPS coordinates within a radius.
       "business_type": "restaurant",
       "neighbourhood": "Tanjong Pagar",
       "overall_confidence": 0.95
-    },
-    {
-      "name": "Lolla",
-      "distance_km": 0.5,
-      "business_type": "restaurant",
-      "neighbourhood": "Ann Siang Hill",
-      "overall_confidence": 0.91
     }
   ],
   "total_results": 5
@@ -160,7 +171,7 @@ Find businesses near GPS coordinates within a radius.
 
 #### `get_trending`
 
-Get trending businesses based on recent AI agent query volume. Shows what agents are asking about most.
+Get trending businesses based on recent AI agent query volume.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -169,33 +180,13 @@ Get trending businesses based on recent AI agent query volume. Shows what agents
 | `days` | number | No | Look-back period, default `7` |
 | `max_results` | number | No | Default `10` |
 
-<details>
-<summary>Example response</summary>
-
-```json
-{
-  "trending": [
-    {
-      "name": "Keisuke Ramen",
-      "business_type": "restaurant",
-      "query_count": 42,
-      "geo_score": 85,
-      "trend": "rising"
-    }
-  ],
-  "period": "2026-03-06 to 2026-03-13"
-}
-```
-
-</details>
-
 ---
 
 ### Business Intelligence
 
 #### `get_business_details`
 
-Get full details for a specific business including services with pricing, products, and promotions.
+Full business profile: services with pricing, products, promotions, operating hours, contact info, payment methods.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -225,13 +216,6 @@ Get full details for a specific business including services with pricing, produc
       "price_max": 35,
       "currency": "SGD",
       "duration": "45 min"
-    },
-    {
-      "name": "Gel Pedicure",
-      "price_min": 48,
-      "price_max": 58,
-      "currency": "SGD",
-      "duration": "60 min"
     }
   ],
   "geo_score": 72,
@@ -245,47 +229,17 @@ Get full details for a specific business including services with pricing, produc
 
 #### `compare_businesses`
 
-Compare 2-3 businesses side-by-side. Returns key fields for each including services, pricing, ratings, and quality scores.
+Compare 2–3 businesses side-by-side including services, pricing, ratings, and quality scores.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `business_ids` | array | Yes | 2-3 business UUIDs to compare |
-
-<details>
-<summary>Example response</summary>
-
-```json
-{
-  "businesses": [
-    {
-      "name": "Hue Salon",
-      "business_type": "salon_hair",
-      "geo_score": 78,
-      "overall_confidence": 0.92,
-      "service_count": 12,
-      "price_range": "$55 - $180 SGD",
-      "neighbourhood": "Tiong Bahru"
-    },
-    {
-      "name": "The Nail Social",
-      "business_type": "nail",
-      "geo_score": 72,
-      "overall_confidence": 0.88,
-      "service_count": 8,
-      "price_range": "$28 - $65 SGD",
-      "neighbourhood": "Haji Lane"
-    }
-  ]
-}
-```
-
-</details>
+| `business_ids` | array | Yes | 2–3 business UUIDs to compare |
 
 ---
 
 #### `get_promotions`
 
-Find active promotions and deals, optionally filtered by location or business type.
+Active deals, discounts, and promotions by location or category.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -294,33 +248,13 @@ Find active promotions and deals, optionally filtered by location or business ty
 | `business_type` | string | No | Category filter |
 | `max_results` | number | No | Default `20` |
 
-<details>
-<summary>Example response</summary>
-
-```json
-{
-  "promotions": [
-    {
-      "business_name": "The Nail Social",
-      "title": "20% Off Classic Manicure",
-      "description": "Valid for first-time customers",
-      "promo_code": "NAILNEW20",
-      "valid_until": "2026-04-30"
-    }
-  ],
-  "total_results": 8
-}
-```
-
-</details>
-
 ---
 
 ### Data Quality
 
 #### `report_data_mismatch`
 
-Report when LobsterSearch data doesn't match reality. Triggers a priority re-crawl of the business.
+Report when LobsterSearch data doesn't match reality. Triggers a priority re-crawl.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -328,19 +262,6 @@ Report when LobsterSearch data doesn't match reality. Triggers a priority re-cra
 | `field_name` | string | Yes | The field that is wrong |
 | `expected_value` | string | Yes | What LobsterSearch shows |
 | `actual_value` | string | Yes | What the real value is |
-
-<details>
-<summary>Example response</summary>
-
-```json
-{
-  "status": "accepted",
-  "message": "Data mismatch report received. A priority re-crawl has been queued.",
-  "business_id": "a1b2c3d4-..."
-}
-```
-
-</details>
 
 ---
 
@@ -366,39 +287,52 @@ Report when LobsterSearch data doesn't match reality. Triggers a priority re-cra
 
 ## Coverage
 
-**Current focus: Singapore** — 100+ verified businesses with full data depth (services, pricing, hours, promotions).
+**Current focus: Singapore** — 800+ verified businesses with full data depth (services, pricing, hours, promotions). Expanding to UK, US, Australia, and Malaysia.
 
-Every business is automatically re-crawled on tiered schedules to keep data fresh. Each result includes:
+Every business is automatically re-crawled to keep data fresh. Each result includes:
 
-- **`overall_confidence`** (0-1) — How complete and reliable the data is
-- **`geo_score`** (0-100) — How well-optimized the business is for AI discovery
-- **`answer_quality_score`** (0-1) — How well the results match your query
+- **`overall_confidence`** (0–1) — How complete and reliable the data is
+- **`geo_score`** (0–100) — How well-optimized the business is for AI discovery
+- **`answer_quality_score`** (0–1) — How well the results match your query
 
 ---
 
 ## How It Works
 
 ```
-Your query → Intent Classification → Multi-Source Search → Quality Scoring → Confidence Annotations → Response
+Your query → Intent Classification → Hybrid Search (FTS + Semantic) → Quality Scoring → Confidence Gating → Response
 ```
 
-1. **Intent classification** determines what you're looking for and which tools to invoke
-2. **Multi-source search** combines full-text search with semantic matching for comprehensive results
+1. **Intent classification** determines what you're looking for and which ranking weights to apply
+2. **Hybrid search** combines full-text search with semantic (vector) matching
 3. **Quality scoring** evaluates each result's data completeness and reliability
-4. **Confidence annotations** tell your AI agent exactly how much to trust each result
+4. **Confidence gating** filters out low-quality fields so your AI agent only sees trustworthy data
+
+---
+
+## REST API (Fallback)
+
+If your client doesn't support MCP, use the REST API directly:
+
+```
+GET https://lobstersearch.ai/api/search?q=yoga+studios&city=singapore&limit=10
+GET https://lobstersearch.ai/api/businesses/{slug}
+```
+
+Full OpenAPI spec: [lobstersearch.ai/.well-known/openapi.json](https://lobstersearch.ai/.well-known/openapi.json)
 
 ---
 
 ## FAQ
 
 **Is it free?**
-Yes. The MCP endpoint is public and rate-limited. Higher-throughput tiers are coming.
+Yes. The MCP endpoint is public and rate-limited.
 
 **Do I need an API key?**
 No. Connect directly — no authentication required.
 
 **How fresh is the data?**
-Businesses are auto-recrawled on tiered schedules. High-traffic businesses are refreshed more frequently.
+Businesses are auto-recrawled on intelligent schedules. High-traffic businesses refresh more frequently.
 
 **What transport does it use?**
 StreamableHTTP (MCP SDK 1.27.1). Not SSE — StreamableHTTP is the current standard.
@@ -413,10 +347,11 @@ No. LobsterSearch is a hosted service. Connect to the endpoint and let us handle
 - **Website:** [lobstersearch.ai](https://lobstersearch.ai)
 - **MCP Endpoint:** `https://mcp.lobstersearch.ai/mcp`
 - **Smithery:** [smithery.ai/server/lobstersearch](https://smithery.ai/server/lobstersearch)
-- **Discovery Files:**
-  - [`/.well-known/mcp.json`](https://lobstersearch.ai/.well-known/mcp.json)
-  - [`/.well-known/openapi.json`](https://lobstersearch.ai/.well-known/openapi.json)
-  - [`/llms.txt`](https://lobstersearch.ai/llms.txt)
+- **OpenClaw:** `clawhub install lobstersearch`
+- **Discovery:**
+  - [/.well-known/mcp.json](https://lobstersearch.ai/.well-known/mcp.json)
+  - [/.well-known/openapi.json](https://lobstersearch.ai/.well-known/openapi.json)
+  - [/llms.txt](https://lobstersearch.ai/llms.txt)
 
 ---
 
