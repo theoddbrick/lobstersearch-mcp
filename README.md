@@ -56,12 +56,6 @@ Add to your `~/.gemini/settings.json`:
 }
 ```
 
-### OpenClaw
-
-```bash
-clawhub install lobstersearch
-```
-
 ### Cursor / Windsurf / Any MCP Client
 
 ```json
@@ -353,7 +347,7 @@ No. LobsterSearch is a hosted service. Connect to the endpoint and let us handle
 - **Website:** [lobstersearch.ai](https://lobstersearch.ai)
 - **MCP Endpoint:** `https://mcp.lobstersearch.ai/mcp`
 - **Smithery:** [smithery.ai/server/lobstersearch](https://smithery.ai/server/lobstersearch)
-- **OpenClaw:** `clawhub install lobstersearch`
+
 - **Tool Schema:** [mcp.json](mcp.json)
 - **Changelog:** [CHANGELOG.md](CHANGELOG.md)
 
