@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="assets/banner.svg" alt="LobsterSearch MCP Server" width="100%"/>
-</p>
+
 
 <h3 align="center">AI-Native Agentic Commerce — 10 MCP tools for discovery, catalog, and ordering</h3>
 
