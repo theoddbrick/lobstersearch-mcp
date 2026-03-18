@@ -174,7 +174,7 @@ Deep product view — all variant dimensions, combinations, prices, SKUs, stock 
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `offering_id` | string | Yes | Product/offering UUID |
+| `product_id` | string | Yes | Product/offering UUID |
 
 ---
 
@@ -184,7 +184,7 @@ Real-time stock check for a product or specific variant combination.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `offering_id` | string | Yes | Product/offering UUID |
+| `product_id` | string | Yes | Product UUID |
 | `options` | object | No | Variant options, e.g. `{"Color":"Black","Size":"Large"}` |
 
 ---
@@ -198,7 +198,7 @@ Create a draft order with atomic stock reservation. Specify items by offering + 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `business_id` | string | Yes | Business UUID |
-| `items` | array | Yes | Array of `{offering_id, variant_id?, quantity}` |
+| `items` | array | Yes | Array of `{product_id, variant_id?, quantity}` |
 | `customer_email` | string | No | Email for notifications |
 | `customer_name` | string | No | Customer name |
 | `customer_notes` | string | No | Notes for the business |
@@ -259,13 +259,13 @@ Agent: details(slug: "mama-mia-pasta")
 Agent: browse_catalog(business_id: "abc-123")
   → Gets all menu items with prices and variants
 
-Agent: get_product_details(offering_id: "pasta-001")
+Agent: get_product_details(product_id: "pasta-001")
   → Gets variant details: sizes (Regular, Large), add-ons
 
-Agent: check_availability(offering_id: "pasta-001", options: {"Size": "Large"})
+Agent: check_availability(product_id: "pasta-001", options: {"Size": "Large"})
   → Confirms availability and price
 
-Agent: create_order(business_id: "abc-123", items: [{offering_id: "pasta-001", variant_id: "v-large", quantity: 2}])
+Agent: create_order(business_id: "abc-123", items: [{product_id: "pasta-001", variant_id: "v-large", quantity: 2}])
   → Draft order created, stock reserved
 
 Agent: confirm_order(order_id: "order-xyz")
@@ -288,10 +288,10 @@ Agent: compare(business_ids: ["clinic-1", "clinic-2", "clinic-3"])
 ### 3. Availability Check Before Ordering
 
 ```
-Agent: check_availability(offering_id: "phone-case-001", options: {"Color": "Black", "Size": "iPhone 15"})
+Agent: check_availability(product_id: "phone-case-001", options: {"Color": "Black", "Size": "iPhone 15"})
   → { available: true, stock: 12, price: 29.90 }
 
-Agent: check_availability(offering_id: "phone-case-001", options: {"Color": "Red", "Size": "iPhone 15"})
+Agent: check_availability(product_id: "phone-case-001", options: {"Color": "Red", "Size": "iPhone 15"})
   → { available: false, stock: 0, retry_guidance: "Try a different color." }
 ```
 

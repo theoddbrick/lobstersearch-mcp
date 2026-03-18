@@ -42,7 +42,7 @@ Search for businesses with natural language. Uses a 4-step fallback chain (struc
 - `limit` (number) — 1-20, default 10
 
 #### details
-Get full business profile by slug or ID. Returns contact info, hours, quality scores, and catalog offerings with variants.
+Get full business profile by slug or ID. Returns contact info, hours, quality scores, and catalog products with variants.
 
 **Parameters:**
 - `slug` (string) — business slug (e.g., "tanjong-rhu-dental")
@@ -68,23 +68,23 @@ Browse a business's product/service catalog. Filter by category, sort by name or
 Deep product view with all variant dimensions, combinations, prices, SKUs, and stock levels.
 
 **Parameters:**
-- `offering_id` (string, required) — product/offering UUID
+- `product_id` (string, required) — Product UUID
 
 #### check_availability
 Real-time stock check for a product or specific variant combination.
 
 **Parameters:**
-- `offering_id` (string, required) — product/offering UUID
+- `product_id` (string, required) — Product UUID
 - `options` (object) — variant options, e.g. {"Color":"Black","Size":"Large"}
 
 ### Commerce
 
 #### create_order
-Create a draft order with atomic stock reservation. Items specified by offering + variant + quantity.
+Create a draft order with atomic stock reservation. Items specified by product + variant + quantity.
 
 **Parameters:**
 - `business_id` (string, required)
-- `items` (array, required) — [{offering_id, variant_id?, quantity}]
+- `items` (array, required) — [{product_id, variant_id?, quantity}]
 - `customer_email` (string) — for notifications
 - `customer_name` (string)
 - `customer_notes` (string)

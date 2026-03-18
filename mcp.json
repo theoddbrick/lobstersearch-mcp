@@ -38,7 +38,7 @@
     },
     {
       "name": "details",
-      "description": "Get full details for a specific business by slug or ID. Returns complete profile including contact info, operating hours, quality scores, and catalog offerings with variant information.",
+      "description": "Get full details for a specific business by slug or ID. Returns complete profile including contact info, operating hours, quality scores, and catalog products with variant information.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -72,7 +72,7 @@
     },
     {
       "name": "browse_catalog",
-      "description": "Browse the product/service catalog for a specific business. Returns available offerings with name, description, price, category, and variant information. Only shows active offerings from active stores.",
+      "description": "Browse the product/service catalog for a specific business. Returns available products with name, description, price, category, and variant information. Only shows active products from active stores.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -82,7 +82,7 @@
           },
           "category": {
             "type": "string",
-            "description": "Filter offerings by category"
+            "description": "Filter products by category"
           },
           "sort_by": {
             "type": "string",
@@ -99,12 +99,12 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "offering_id": {
+          "product_id": {
             "type": "string",
-            "description": "Product/offering UUID"
+            "description": "Product UUID"
           }
         },
-        "required": ["offering_id"]
+        "required": ["product_id"]
       }
     },
     {
@@ -113,9 +113,9 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "offering_id": {
+          "product_id": {
             "type": "string",
-            "description": "Product/offering UUID"
+            "description": "Product UUID"
           },
           "options": {
             "type": "object",
@@ -123,12 +123,12 @@
             "description": "Variant options, e.g. {\"Color\":\"Black\",\"Storage\":\"256GB\"}. Omit for simple products."
           }
         },
-        "required": ["offering_id"]
+        "required": ["product_id"]
       }
     },
     {
       "name": "create_order",
-      "description": "Create a new draft order for a business. The order starts in 'draft' status with stock reserved. Items are specified by offering IDs (and optional variant IDs) and quantities. The order must be confirmed separately before payment.",
+      "description": "Create a new draft order for a business. The order starts in 'draft' status with stock reserved. Items are specified by product IDs (and optional variant IDs) and quantities. The order must be confirmed separately before payment.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -141,7 +141,7 @@
             "items": {
               "type": "object",
               "properties": {
-                "offering_id": {
+                "product_id": {
                   "type": "string",
                   "description": "Offering UUID"
                 },
@@ -156,7 +156,7 @@
                   "maximum": 99
                 }
               },
-              "required": ["offering_id", "quantity"]
+              "required": ["product_id", "quantity"]
             },
             "minItems": 1,
             "maxItems": 20,
